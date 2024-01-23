@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "212290062700",
+    "project_id": "mealitjava",
+    "storage_bucket": "mealitjava.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212290062700:android:756eba6c62e17393238b49",
+        "android_client_info": {
+          "package_name": "com.example.mealitjava"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMgrI9lcPoD3MAEmZIdrxt1ezU8M6VfVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
