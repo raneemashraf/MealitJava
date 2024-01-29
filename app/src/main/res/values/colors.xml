@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="ksa">#327052</color>
+    <color name="notBlack">#373737</color>
 </resources>
