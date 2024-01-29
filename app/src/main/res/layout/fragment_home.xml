@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:context=".ui.home.view.HomeFragment">
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/header_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today’s Dish"
+            android:fontFamily="@font/barlowbold"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+            app:layout_constraintTop_toTopOf="@+id/topGuideline" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewRandomMeal"
+            android:layout_width="326dp"
+            android:layout_height="264dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginVertical="16dp"
+            android:fontFamily="@font/barlow"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardMaxElevation="6dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imageViewDishOfTheDay"
+                    android:layout_width="325dp"
+                    android:layout_height="159dp"
+                    android:scaleType="fitXY"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_corner_radius_top_left="16dp"
+                    app:riv_corner_radius_top_right="16dp" />
+
+                <TextView
+                    android:id="@+id/txtViewMealNameDishOfTheDay"
+                    style="@style/header_three"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewDishOfTheDay"
+                    tools:text="Traditional French omelette" />
+
+                <TextView
+                    android:id="@+id/textViewCountryDishOfTheDay"
+                    style="@style/header_three"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@+id/txtViewMealNameDishOfTheDay"
+                    app:layout_constraintTop_toBottomOf="@+id/txtViewMealNameDishOfTheDay"
+                    tools:text="French" />
+
+                <TextView
+                    android:id="@+id/textViewCategory"
+                    android:layout_width="303dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="32dp"
+                    style="@style/header_three"
+                    android:text="Breakfast"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/textViewCountryDishOfTheDay"
+                    app:layout_constraintHorizontal_bias="0.51"
+                    app:layout_constraintStart_toStartOf="@+id/textViewCountryDishOfTheDay"
+                    app:layout_constraintTop_toTopOf="@+id/textViewCountryDishOfTheDay"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/topGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/leftGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="19dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView4"-->
+<!--            style="@style/header_one"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:text="you might like"-->
+<!--            android:fontFamily="@font/barlowbold"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/leftGuideline"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/barrier3" />-->
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recycelrViewYouMightLikeHome"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/textView4"-->
+<!--            tools:itemCount="10"-->
+<!--            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+<!--            tools:listitem="@layout/item_main_meal"-->
+<!--            tools:spanCount="2" />-->
+
+<!--        <androidx.constraintlayout.widget.Barrier-->
+<!--            android:id="@+id/barrier3"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:barrierDirection="bottom"-->
+<!--            app:constraint_referenced_ids="cardViewRandomMeal,textView"-->
+<!--            tools:layout_editor_absoluteY="341dp" />-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>
