@@ -3,6 +3,11 @@ package com.example.mealitjava.Home.view;
 import static android.content.ContentValues.TAG;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,27 +15,26 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.example.mealitjava.Home.presenter.HomePresenter;
 import com.example.mealitjava.Home.presenter.HomePresenterImpl;
 import com.example.mealitjava.R;
 import com.example.mealitjava.model.MealsItem;
 import com.example.mealitjava.model.repository.mealsRepo.MealsRepositoryImpl;
-import com.example.mealitjava.remotesource.api.MealsItemRemoteImpl;
+import com.example.mealitjava.remoteDataSource.api.MealsItemRemoteImpl;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.example.mealitjava.Home.view.HomeFragmentDirections.ActionHomeFragmentToMealDetailsFragment;
+
+
 
 public class HomeFragment extends Fragment implements HomeInterfaceView {
      HomePresenter homePresenter;
      MealsItemRemoteImpl mealsItemRemote;
      TextView textViewMealName;
      TextView textViewMealCountry;
-     RoundedImageView imageViewDishOfTheDay;
+     TextView textViewMealCategory;
+
+    RoundedImageView imageViewDishOfTheDay;
      CardView cardView;
 
     public HomeFragment() {
@@ -52,16 +56,23 @@ public class HomeFragment extends Fragment implements HomeInterfaceView {
         textViewMealCountry = view.findViewById(R.id.textViewCountryDishOfTheDay);
         imageViewDishOfTheDay = view.findViewById(R.id.imageViewDishOfTheDay);
         cardView = view.findViewById(R.id.cardViewRandomMeal);
+        textViewMealCategory = view.findViewById(R.id.textViewCategory);
 
     }
 
     @Override
     public void showMeal(MealsItem mealsItem) {
-        textViewMealName.setText(mealsItem.getStrMeal());
-        textViewMealCountry.setText(mealsItem.getStrArea());
-        Glide.with(imageViewDishOfTheDay.getContext()).load(mealsItem.getStrMealThumb()).into(imageViewDishOfTheDay);
-
-        Log.i(TAG, "showMeal: " + mealsItem.getStrCategory());
+        textViewMealName.setText(mealsItem.strMeal);
+        textViewMealCountry.setText(mealsItem.strArea);
+        textViewMealCategory.setText(mealsItem.strCategory);
+        Glide.with(imageViewDishOfTheDay.getContext()).load(mealsItem.strMealThumb).into(imageViewDishOfTheDay);
+        cardView.setOnClickListener(v -> {
+            //Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_mealDetailsFragment);
+            ActionHomeFragmentToMealDetailsFragment action =
+                    HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(mealsItem);
+            Navigation.findNavController(v).navigate(action);
+        });
+        Log.i(TAG, "showMeal: " + mealsItem.strCategory);
     }
 
     @Override

@@ -15,7 +15,11 @@
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
-        android:name="com.example.mealitjava.Home.view.MealDetailsFragment"
+        android:name="com.example.mealitjava.MealDetails.view.MealDetailsFragment"
         android:label="fragment_meal_details"
-        tools:layout="@layout/fragment_meal_details" />
+        tools:layout="@layout/fragment_meal_details" >
+        <argument
+            android:name="Mealitem"
+            app:argType="com.example.mealitjava.model.MealsItem" />
+    </fragment>
 </navigation>

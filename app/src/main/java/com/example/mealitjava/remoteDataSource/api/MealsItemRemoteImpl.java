@@ -1,6 +1,4 @@
-package com.example.mealitjava.remotesource.api;
-
-import static android.content.ContentValues.TAG;
+package com.example.mealitjava.remoteDataSource.api;
 
 import android.util.Log;
 
@@ -29,7 +27,7 @@ public class MealsItemRemoteImpl implements MealsItemRemote{
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
                 mealsCallback.onSuccessResult(response.body().getMeals().get(0));
-                Log.i(TAG, "onResponse: " + response);
+                Log.i("TAG", "onResponse: " + response);
             }
             @Override
             public void onFailure(Call<MealResponse> call, Throwable t) {

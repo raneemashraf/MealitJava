@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.mealitjava.Home.view.HomeActivity;
+import com.example.mealitjava.Home.HomeActivity;
 import com.example.mealitjava.authantication.login.presenter.LogInPresenter;
 import com.example.mealitjava.authantication.login.presenter.LogInPresenterImpl;
 import com.example.mealitjava.databinding.FragmentLoginBinding;

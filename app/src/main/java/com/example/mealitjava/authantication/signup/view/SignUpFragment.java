@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.example.mealitjava.Home.view.HomeActivity;
+import com.example.mealitjava.Home.HomeActivity;
 import com.example.mealitjava.R;
 import com.example.mealitjava.authantication.signup.presenter.SignUpPresenter;
 import com.example.mealitjava.authantication.signup.presenter.SignUpPresenterImpl;
@@ -24,13 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpFragment extends Fragment implements SignUpViewInterface {
     FragmentSignUpBinding binding;
-
     private SignUpPresenter signUpPresenter;
     private static final String TAG = "SignUpFragment";
 
-    EditText etName;
-    EditText etPass;
-    Button signUpBtn;
     public SignUpFragment() {
         // Required empty public constructor
     }
@@ -52,7 +46,7 @@ public class SignUpFragment extends Fragment implements SignUpViewInterface {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.SignUpBtn.setOnClickListener(v -> signUp());
+        binding.signUpBtn.setOnClickListener(v -> signUp());
         binding.TxtLogin.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_loginFragment);
         });

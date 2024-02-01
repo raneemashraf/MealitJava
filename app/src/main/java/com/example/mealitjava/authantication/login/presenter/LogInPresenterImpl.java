@@ -2,7 +2,7 @@ package com.example.mealitjava.authantication.login.presenter;
 
 import com.example.mealitjava.authantication.login.view.LogInViewInterface;
 import com.example.mealitjava.model.repository.authRepo.AuthRepositoryImpl;
-import com.example.mealitjava.remotesource.LogInCallBack;
+import com.example.mealitjava.remoteDataSource.LogInCallBack;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LogInPresenterImpl implements LogInPresenter, LogInCallBack {

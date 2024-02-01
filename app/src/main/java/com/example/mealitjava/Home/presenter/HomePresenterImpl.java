@@ -2,10 +2,8 @@ package com.example.mealitjava.Home.presenter;
 
 import com.example.mealitjava.Home.view.HomeInterfaceView;
 import com.example.mealitjava.model.repository.mealsRepo.MealsRepository;
-import com.example.mealitjava.model.repository.mealsRepo.MealsRepositoryImpl;
-import com.example.mealitjava.remotesource.api.MealsCallback;
+import com.example.mealitjava.remoteDataSource.api.MealsCallback;
 import com.example.mealitjava.model.MealsItem;
-import com.example.mealitjava.remotesource.api.MealsItemRemote;
 
 public class HomePresenterImpl implements HomePresenter, MealsCallback {
     private static final String TAG = "HomePresenter";

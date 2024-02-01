@@ -2,7 +2,7 @@ package com.example.mealitjava.authantication.signup.presenter;
 
 import com.example.mealitjava.authantication.signup.view.SignUpViewInterface;
 import com.example.mealitjava.model.repository.authRepo.AuthRepository;
-import com.example.mealitjava.remotesource.SignUpCallBack;
+import com.example.mealitjava.remoteDataSource.SignUpCallBack;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpPresenterImpl implements SignUpPresenter, SignUpCallBack {
@@ -30,7 +30,6 @@ public class SignUpPresenterImpl implements SignUpPresenter, SignUpCallBack {
     public void onSuccess(FirebaseUser user) {
         signUpView.onSuccess(user);
     }
-
     @Override
     public void onFailure(String errorMessage) {
         signUpView.OnFailure(errorMessage);
