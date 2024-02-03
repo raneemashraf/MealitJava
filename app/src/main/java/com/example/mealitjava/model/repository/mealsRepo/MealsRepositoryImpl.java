@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData;
 
 import com.example.mealitjava.localDataSource.MealLocalSource;
 import com.example.mealitjava.model.MealsItem;
-import com.example.mealitjava.remoteDataSource.api.MealsCallback;
+import com.example.mealitjava.remoteDataSource.CategoryCallBack;
+import com.example.mealitjava.remoteDataSource.MealsCallback;
 import com.example.mealitjava.remoteDataSource.api.MealsItemRemote;
 
 import java.util.List;
@@ -14,10 +15,13 @@ public class MealsRepositoryImpl implements MealsRepository{
     MealsItemRemote mealsItemRemote;
     MealLocalSource mealLocalSource;
 
-    public MealsRepositoryImpl(MealsItemRemote mealsItemRemote) {
+    public MealsRepositoryImpl(MealsItemRemote mealsItemRemote ,MealLocalSource mealLocalSource) {
+        this.mealsItemRemote = mealsItemRemote;
+        this.mealLocalSource = mealLocalSource;
+    }
+    public MealsRepositoryImpl(MealsItemRemote mealsItemRemote ) {
         this.mealsItemRemote = mealsItemRemote;
     }
-
     public static MealsRepositoryImpl getInstance(MealsItemRemote mealsItemRemote)
     {
         if(mealsRepositoryObj == null){
@@ -27,22 +31,27 @@ public class MealsRepositoryImpl implements MealsRepository{
     }
 
     @Override
+    public void getCategory(CategoryCallBack categoryCallBack) {
+        mealsItemRemote.makeCategoryCall(categoryCallBack);
+    }
+
+    @Override
     public void getRandomMeal(MealsCallback mealsCallback) {
        mealsItemRemote.makeNetworkCall(mealsCallback);
     }
 
     @Override
-    public void insertProductToFavorite(MealsItem meal) {
+    public void insertMealToFavorite(MealsItem meal) {
         mealLocalSource.insertMealToFavorite(meal);
     }
 
     @Override
-    public void deleteFavoriteProduct(MealsItem meal) {
+    public void deleteFavoriteMeal(MealsItem meal) {
         mealLocalSource.deleteFavoriteMeal(meal);
     }
 
     @Override
-    public LiveData<List<MealsItem>> getFavProducts() {
+    public LiveData<List<MealsItem>> getFavMeals() {
         return mealLocalSource.getFavoriteMeals();
     }
 }

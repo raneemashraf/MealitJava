@@ -24,21 +24,18 @@ public class MealLocalSourceImpl implements MealLocalSource{
         }
         return mealLocalSource;
     }
-
     @Override
     public void insertMealToFavorite(MealsItem meal) {
         new Thread(() -> mealDao.insertMealToFavorite(meal)){
         }.start();
-
     }
-
     @Override
     public void deleteFavoriteMeal(MealsItem meal) {
         new Thread(() -> mealDao.deleteMealFromFavorite(meal)){
         }.start();
     }
     @Override
-    public LiveData<List<MealsItem>> getFavoriteMeals() {
+    public LiveData<List<MealsItem>> getFavoriteMeals(){
         return favoriteMeals;
     }
 }

@@ -13,9 +13,9 @@ public class FavMealPresenterImp implements FavMealPresenter {
     MealsRepository mealsRepository;
     FavoriteView favView;
 
-    public static FavMealPresenterImp getInstance(MealsRepository mealsRepository, FavoriteView favView){
+    public static FavMealPresenterImp getInstance(MealsRepository mealsRepository){
         if(FavProductPresenterImp==null){
-            FavProductPresenterImp=new FavMealPresenterImp(mealsRepository,favView);
+            FavProductPresenterImp=new FavMealPresenterImp(mealsRepository);
         }
         return FavProductPresenterImp;
     }
@@ -25,14 +25,17 @@ public class FavMealPresenterImp implements FavMealPresenter {
         this.favView = favView;
     }
 
-        //favProductView.showData(products);
+    public FavMealPresenterImp(MealsRepository mealsRepository) {
+        this.mealsRepository = mealsRepository;
+    }
+
     @Override
     public void getMeals() {
-       LiveData<List<MealsItem>> result = mealsRepository.getFavProducts();
+       LiveData<List<MealsItem>> result = mealsRepository.getFavMeals();
         favView.showFav(result);
     }
     @Override
     public void deleteFavoriteMeal(MealsItem meal) {
-        mealsRepository.deleteFavoriteProduct(meal);
+        mealsRepository.deleteFavoriteMeal(meal);
     }
 }

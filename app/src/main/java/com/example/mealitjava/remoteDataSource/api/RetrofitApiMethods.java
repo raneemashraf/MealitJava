@@ -1,11 +1,17 @@
 package com.example.mealitjava.remoteDataSource.api;
 
+import com.example.mealitjava.model.CategoryResponse;
+import com.example.mealitjava.model.CountryResponse;
 import com.example.mealitjava.model.MealResponse;
 
-import retrofit2.Call;
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
 
 public interface RetrofitApiMethods {
     @GET("random.php")
-    Call<MealResponse> getRandomMeal();
+    Observable<MealResponse> getRandomMeal();
+    @GET("categories.php")
+    Observable<CategoryResponse> getCategories();
+    @GET("list.php?a=list")
+    Observable<CountryResponse> getCuisines();
 }

@@ -1,11 +1,15 @@
 package com.example.mealitjava.Home.presenter;
 
 import com.example.mealitjava.Home.view.HomeInterfaceView;
-import com.example.mealitjava.model.repository.mealsRepo.MealsRepository;
-import com.example.mealitjava.remoteDataSource.api.MealsCallback;
+import com.example.mealitjava.model.Category;
 import com.example.mealitjava.model.MealsItem;
+import com.example.mealitjava.model.repository.mealsRepo.MealsRepository;
+import com.example.mealitjava.remoteDataSource.CategoryCallBack;
+import com.example.mealitjava.remoteDataSource.MealsCallback;
 
-public class HomePresenterImpl implements HomePresenter, MealsCallback {
+import java.util.List;
+
+public class HomePresenterImpl implements HomePresenter, MealsCallback ,CategoryCallBack {
     private static final String TAG = "HomePresenter";
     HomeInterfaceView homeInterfaceView;
     MealsRepository mealsRepository;
@@ -27,11 +31,24 @@ public class HomePresenterImpl implements HomePresenter, MealsCallback {
     }
 
     @Override
+    public void getCategory() {
+        mealsRepository.getCategory(this);
+    }
+
+    @Override
     public void onSuccessResult(MealsItem mealsItem) {
         homeInterfaceView.showMeal(mealsItem);
     }
     @Override
     public void onFailureResult(String errorMessage) {
+        homeInterfaceView.showError(errorMessage);
+    }
+    @Override
+    public void onSuccessCategory(List<Category> category) {
+        homeInterfaceView.showCategories(category);
+    }
+    @Override
+    public void onFailureCategory(String errorMessage) {
         homeInterfaceView.showError(errorMessage);
     }
 }

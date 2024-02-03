@@ -1,4 +1,4 @@
-package com.example.mealitjava.Home.view;
+package com.example.mealitjava.MealDetails.view;
 
 public class GetIdFromYoutubeUrl {
     public static String getId(String link) {

@@ -1,12 +1,14 @@
 package com.example.mealitjava.remoteDataSource.api;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.util.Log;
 
-import com.example.mealitjava.model.MealResponse;
+import com.example.mealitjava.remoteDataSource.CategoryCallBack;
+import com.example.mealitjava.remoteDataSource.MealsCallback;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealsItemRemoteImpl implements MealsItemRemote{
     static MealsItemRemoteImpl mealsItemRemoteObj;
@@ -23,16 +25,36 @@ public class MealsItemRemoteImpl implements MealsItemRemote{
     }
     @Override
     public void makeNetworkCall(MealsCallback mealsCallback) {
-        apiMethods.getRandomMeal().enqueue(new Callback<MealResponse>() {
-            @Override
-            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                mealsCallback.onSuccessResult(response.body().getMeals().get(0));
-                Log.i("TAG", "onResponse: " + response);
-            }
-            @Override
-            public void onFailure(Call<MealResponse> call, Throwable t) {
-                mealsCallback.onFailureResult(t.getMessage());
-            }
-        });
+        apiMethods.getRandomMeal().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealResponse->{
+                            mealsCallback.onSuccessResult(mealResponse.getMeals().get(0));
+                            Log.i(TAG, "makeCategoryCall: " + mealResponse.getMeals());
+                        },
+                        error -> Log.i(TAG, "Error: " + error.toString())
+                );
+
+//        .enqueue(new Callback<MealResponse>() {
+//            @Override
+//            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+//                mealsCallback.onSuccessResult(response.body().getMeals().get(0));
+//                Log.i("TAG", "onResponse: " + response);
+//            }
+//            @Override
+//            public void onFailure(Call<MealResponse> call, Throwable t) {
+//                mealsCallback.onFailureResult(t.getMessage());
+//            }
+//        });
+    }
+    @Override
+    public void makeCategoryCall(CategoryCallBack categoryCallBack) {
+        apiMethods.getCategories().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(categoryResponse->{
+                    categoryCallBack.onSuccessCategory(categoryResponse.getCategories());
+                            Log.i(TAG, "makeCategoryCall: " + categoryResponse.getCategories());
+                },
+                   error -> Log.i(TAG, "Error: " + error.toString())
+                        );
     }
 }

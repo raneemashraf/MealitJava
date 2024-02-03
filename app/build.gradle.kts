@@ -84,5 +84,19 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    //Lotti Dependency
+    implementation ("com.airbnb.android:lottie:4.0.0")
+
+    //splash
+    implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
+
+    //room adapter Rx
+    implementation ("com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0")
+    implementation("androidx.room:room-rxjava3:$2.6.1")
+
+    //Rx android
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
+
 
 }

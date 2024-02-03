@@ -1,4 +1,4 @@
-package com.example.mealitjava.remoteDataSource.api;
+package com.example.mealitjava.remoteDataSource;
 
 import com.example.mealitjava.model.MealsItem;
 

@@ -75,7 +75,7 @@
             android:id="@+id/imageViewAddToFavITemDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_favorite_24"
+            android:src="@drawable/favorite"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewAddToCalendarItemDetails"
             app:layout_constraintEnd_toStartOf="@+id/textViewMealCateItemDetails"
             app:layout_constraintHorizontal_bias="0.5"
