@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData;
 import com.example.mealitjava.localDataSource.MealLocalSource;
 import com.example.mealitjava.model.MealsItem;
 import com.example.mealitjava.remoteDataSource.CategoryCallBack;
-import com.example.mealitjava.remoteDataSource.MealsCallback;
+import com.example.mealitjava.remoteDataSource.NetworkCallback;
 import com.example.mealitjava.remoteDataSource.api.MealsItemRemote;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class MealsRepositoryImpl implements MealsRepository{
     }
 
     @Override
-    public void getRandomMeal(MealsCallback mealsCallback) {
+    public void getRandomMeal(NetworkCallback mealsCallback) {
        mealsItemRemote.makeNetworkCall(mealsCallback);
     }
 
@@ -54,4 +54,15 @@ public class MealsRepositoryImpl implements MealsRepository{
     public LiveData<List<MealsItem>> getFavMeals() {
         return mealLocalSource.getFavoriteMeals();
     }
+
+    @Override
+    public void getFilteredMeals(NetworkCallback filterCallback, String name, char c) {
+        mealsItemRemote.makeCallFilter(filterCallback,name, c);
+    }
+
+    @Override
+    public void getSearchedMeals(NetworkCallback searchCallback, String search) {
+        mealsItemRemote.makeCallBySearch(searchCallback,search);
+    }
+
 }

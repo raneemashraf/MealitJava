@@ -64,4 +64,6 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="favorite_meals">Favorite Meals</string>
+    <string name="meal" />
+    <string name="search_meal" />
 </resources>
