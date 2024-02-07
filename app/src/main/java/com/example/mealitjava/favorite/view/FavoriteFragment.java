@@ -44,7 +44,7 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
 
         favMealPresenter = new FavMealPresenterImp(
                 new MealsRepositoryImpl(new MealsItemRemoteImpl(), new MealLocalSourceImpl(getContext())),
-                this // Make sure 'this' is a valid FavoriteView
+                this
         );
 
         Log.e("TAG", "onCreate: ");

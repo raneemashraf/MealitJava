@@ -21,5 +21,4 @@ public class HomeActivity extends AppCompatActivity  {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
     }
-
 }

@@ -51,16 +51,16 @@ public class SearchedMealsAdapter extends RecyclerView.Adapter<SearchedMealsAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MealsItem meal = allMeals.get(position);
         holder.mealSearchedNameCardTextView.setText(allMeals.get(position).strMeal);
+        holder.categoryTextview.setText(allMeals.get(position).strCategory);
         Glide.with(context).load(allMeals.get(position).strMealThumb)
                 .apply(new RequestOptions().override(200, 160))
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_foreground)
                 .into(holder.mealSearchedCardImageView);
 
-        Log.i("onBindViewHolder: ", holder.getAdapterPosition() + "");
         holder.searchCardConstraintLayout.setOnClickListener(v -> {
-            SearchFragmentDirections.ActionSearchFragmentToMealDetailsFragment action =
-                    SearchFragmentDirections.actionSearchFragmentToMealDetailsFragment(meal);
+            SearchByMealFragmentDirections.ActionSearchFragmentToMealDetailsFragment action =
+                    SearchByMealFragmentDirections.actionSearchFragmentToMealDetailsFragment(meal);
             Navigation.findNavController(v).navigate(action);
 
         });
@@ -73,11 +73,12 @@ public class SearchedMealsAdapter extends RecyclerView.Adapter<SearchedMealsAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView mealSearchedNameCardTextView;
+        TextView categoryTextview, mealSearchedNameCardTextView;
         ImageView mealSearchedCardImageView;
         ConstraintLayout searchCardConstraintLayout;
         public ViewHolder(View itemView) {
             super(itemView);
+            categoryTextview =itemView.findViewById(R.id.categorySearchCard);
             mealSearchedCardImageView = itemView.findViewById(R.id.mealSearchedCardImageView);
             mealSearchedNameCardTextView = itemView.findViewById(R.id.mealSearchedNameCardTextView);
             searchCardConstraintLayout = itemView.findViewById(R.id.searchCardConstraintLayout);

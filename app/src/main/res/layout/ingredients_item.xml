@@ -6,7 +6,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:backgroundTint="@color/white">
+    android:backgroundTint="@color/white"
+    android:id="@+id/ingredientCard">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imageViewIngredientImage"

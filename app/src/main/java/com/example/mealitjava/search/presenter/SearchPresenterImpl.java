@@ -4,7 +4,10 @@ import static android.content.ContentValues.TAG;
 
 import android.util.Log;
 
+import com.example.mealitjava.model.Category;
 import com.example.mealitjava.model.Country;
+import com.example.mealitjava.model.IngredientList;
+import com.example.mealitjava.model.MealResponse;
 import com.example.mealitjava.model.MealsItem;
 import com.example.mealitjava.model.repository.mealsRepo.MealsRepository;
 import com.example.mealitjava.remoteDataSource.NetworkCallback;
@@ -42,8 +45,24 @@ public class SearchPresenterImpl implements SearchPresenterInterface , NetworkCa
     public void onSuccessCountry(List<Country> countries) {
 
     }
+
     @Override
-    public void onSuccessMealByFilter(List<MealsItem> meals) {
+    public void onSuccessCategory(List<Category> category) {
+
+    }
+
+    @Override
+    public void onSuccessIngredient(List<IngredientList> ingredientLists) {
+
+    }
+
+    @Override
+    public void onSuccessPlanner(List<MealsItem> meals) {
+
+    }
+
+    @Override
+    public void onSuccessMealByFilter(MealResponse meals) {
 
     }
 

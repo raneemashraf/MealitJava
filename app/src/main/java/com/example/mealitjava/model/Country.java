@@ -1,8 +1,16 @@
 package com.example.mealitjava.model;
 
-public class Country {
-    public String strArea;
-    public Country(){}
+import java.io.Serializable;
+
+public class Country implements Serializable {
+    private String strArea;
+
+    public Country(String strArea) {
+        this.strArea = strArea;
+    }
+
+    public Country() {
+    }
 
     public String getStrArea() {
         return strArea;

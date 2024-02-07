@@ -35,9 +35,7 @@ import java.util.List;
 public class HomeFragment extends Fragment implements HomeInterfaceView {
     HomePresenter homePresenter;
     MealsItemRemoteImpl mealsItemRemote;
-    TextView textViewMealName;
-    TextView textViewMealCountry;
-    TextView textViewMealCategory;
+    TextView textViewMealName,textViewMealCountry,textViewMealCategory;
     CategoryAdapter categoryAdapter;
     GridLayoutManager gridLayoutManager;
     RoundedImageView imageViewDishOfTheDay;

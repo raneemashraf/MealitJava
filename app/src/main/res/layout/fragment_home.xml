@@ -8,6 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/bigPage"
         android:orientation="horizontal"
         tools:context=".ui.home.view.HomeFragment">
 
@@ -16,8 +17,8 @@
             style="@style/header_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Today’s Dish"
             android:fontFamily="@font/barlowbold"
+            android:text="Today’s Dish"
             app:layout_constraintStart_toStartOf="@+id/leftGuideline"
             app:layout_constraintTop_toTopOf="@+id/topGuideline" />
 
@@ -121,8 +122,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Category"
             android:fontFamily="@font/barlowbold"
+            android:text="Category"
             app:layout_constraintStart_toStartOf="@+id/leftGuideline"
             app:layout_constraintTop_toBottomOf="@id/barrier3" />
 

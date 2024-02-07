@@ -26,19 +26,51 @@
         android:id="@+id/favoriteFragment"
         android:name="com.example.mealitjava.favorite.view.FavoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/plannerFragment"
         android:name="com.example.mealitjava.planner.view.PlannerFragment"
         android:label="fragment_planner"
-        tools:layout="@layout/fragment_planner" />
+        tools:layout="@layout/fragment_planner" >
+        <action
+            android:id="@+id/action_plannerFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.example.mealitjava.search.view.SearchFragment"
+        android:id="@+id/searchMealFragment"
+        android:name="com.example.mealitjava.search.view.SearchByMealFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search_by_meal" >
         <action
             android:id="@+id/action_searchFragment_to_mealDetailsFragment"
             app:destination="@id/mealDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.mealitjava.search.view.GeneralSearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search_by_meal" >
+
+        <action
+            android:id="@+id/action_searchFragment_to_searchMealFragment"
+            app:destination="@id/searchMealFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_filterResultFragment"
+            app:destination="@id/filterResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterResultFragment"
+        android:name="com.example.mealitjava.search.FilterResultFragment"
+        android:label="FilterResultFragment" >
+        <action
+            android:id="@+id/action_filterResultFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+        <argument
+            android:name="ListMeal"
+            app:argType="com.example.mealitjava.model.MealResponse" />
     </fragment>
 </navigation>

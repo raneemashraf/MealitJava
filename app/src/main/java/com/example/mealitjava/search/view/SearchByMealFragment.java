@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.mealitjava.databinding.FragmentSearchBinding;
+import com.example.mealitjava.databinding.FragmentSearchByMealBinding;
 import com.example.mealitjava.model.MealsItem;
 import com.example.mealitjava.model.repository.mealsRepo.MealsRepositoryImpl;
 import com.example.mealitjava.remoteDataSource.api.MealsItemRemoteImpl;
@@ -23,22 +23,21 @@ import com.example.mealitjava.search.presenter.SearchPresenterInterface;
 
 import java.util.List;
 
-public class SearchFragment extends Fragment implements SearchClickListener,SearchViewInterface{
-    FragmentSearchBinding binding;
+public class SearchByMealFragment extends Fragment implements SearchClickListener,SearchViewInterface {
+    FragmentSearchByMealBinding binding;
     SearchedMealsAdapter searchedMealsAdapter;
     SearchPresenterInterface searchPresenterInterface;
 
-    public SearchFragment() {
+    public SearchByMealFragment() {
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentSearchBinding.inflate(inflater, container, false);
+        binding = FragmentSearchByMealBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
-       // return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
     @Override
@@ -52,13 +51,11 @@ public class SearchFragment extends Fragment implements SearchClickListener,Sear
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Log.i(TAG, "onTextChanged: "+charSequence);
+                Log.i(TAG, "onTextChanged: " + charSequence);
                 searchPresenterInterface.getSearchedMeals(charSequence + "");
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -70,7 +67,8 @@ public class SearchFragment extends Fragment implements SearchClickListener,Sear
     public void showMeals(List<MealsItem> meals) {
         if(meals != null){
             Log.i(TAG, "showMeals: "+meals.get(0).strMeal);
-            searchedMealsAdapter = new SearchedMealsAdapter(getContext(), SearchFragment.this);
+            searchedMealsAdapter = new SearchedMealsAdapter(getContext(),
+                    SearchByMealFragment.this);
             searchedMealsAdapter.setAllMeals(meals);
             binding.searchResultRecyclerView.setAdapter(searchedMealsAdapter);
         }

@@ -3,14 +3,15 @@ package com.example.mealitjava.Home.presenter;
 import com.example.mealitjava.Home.view.HomeInterfaceView;
 import com.example.mealitjava.model.Category;
 import com.example.mealitjava.model.Country;
+import com.example.mealitjava.model.IngredientList;
+import com.example.mealitjava.model.MealResponse;
 import com.example.mealitjava.model.MealsItem;
 import com.example.mealitjava.model.repository.mealsRepo.MealsRepository;
-import com.example.mealitjava.remoteDataSource.CategoryCallBack;
 import com.example.mealitjava.remoteDataSource.NetworkCallback;
 
 import java.util.List;
 
-public class HomePresenterImpl implements HomePresenter, NetworkCallback,CategoryCallBack {
+public class HomePresenterImpl implements HomePresenter, NetworkCallback {
     private static final String TAG = "HomePresenter";
     HomeInterfaceView homeInterfaceView;
     MealsRepository mealsRepository;
@@ -48,9 +49,17 @@ public class HomePresenterImpl implements HomePresenter, NetworkCallback,Categor
     public void onSuccessCountry(List<Country> countries) {
 
     }
+    @Override
+    public void onSuccessIngredient(List<IngredientList> ingredientLists) {
+    }
 
     @Override
-    public void onSuccessMealByFilter(List<MealsItem> meals) {
+    public void onSuccessPlanner(List<MealsItem> meals) {
+
+    }
+
+    @Override
+    public void onSuccessMealByFilter(MealResponse meals) {
 
     }
     @Override
@@ -62,8 +71,5 @@ public class HomePresenterImpl implements HomePresenter, NetworkCallback,Categor
     public void onSuccessCategory(List<Category> category) {
         homeInterfaceView.showCategories(category);
     }
-    @Override
-    public void onFailureCategory(String errorMessage) {
-        homeInterfaceView.showError(errorMessage);
-    }
+
 }

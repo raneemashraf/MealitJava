@@ -2,6 +2,7 @@ package com.example.mealitjava.remoteDataSource.api;
 
 import com.example.mealitjava.model.CategoryResponse;
 import com.example.mealitjava.model.CountryResponse;
+import com.example.mealitjava.model.IngredientResponse;
 import com.example.mealitjava.model.MealResponse;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -16,9 +17,8 @@ public interface RetrofitApiMethods {
     Observable<CategoryResponse> getCategories();
     @GET("list.php?a=list")
     Observable<CountryResponse> getCountry();
-
-//    @GET("api/json/v1/1/list.php?i=list")
-//    Single<IngredientResponse> getAllIngredients();
+    @GET("list.php?i=list")
+    Single<IngredientResponse> getIngredients();
 
     @GET("filter.php?")
     Single<MealResponse> getAllMealsByArea(@Query("a") String area);
@@ -31,9 +31,6 @@ public interface RetrofitApiMethods {
 
     @GET("search.php?")
     Single<MealResponse> getAllMealsBySearch(@Query("s") String name);
-
-
-
 
 
 }

@@ -1,19 +1,21 @@
 package com.example.mealitjava.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CountryResponse {
-    public ArrayList<Country> countries;
+    private List<Country> meals;
 
-    public CountryResponse(){
-
+    public CountryResponse(List<Country> meals) {
+        this.meals = meals;
     }
 
-    public ArrayList<Country> getCountries() {
-        return countries;
+    public CountryResponse() {}
+
+    public List<Country> getCountries() {
+        return meals;
     }
 
-    public void setCountries(ArrayList<Country> countries) {
-        this.countries = countries;
+    public void setCountries(List<Country> meals) {
+        this.meals = meals;
     }
 }

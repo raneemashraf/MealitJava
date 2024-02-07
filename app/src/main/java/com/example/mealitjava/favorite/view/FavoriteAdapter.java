@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -67,6 +68,12 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             onDeleteClickListener.onItemClickListener(mealsItem);
         });
 
+        holder.cardView.setOnClickListener(v -> {
+            FavoriteFragmentDirections.ActionFavoriteFragmentToMealDetailsFragment action =
+                    FavoriteFragmentDirections.actionFavoriteFragmentToMealDetailsFragment(mealsItem);
+            Navigation.findNavController(v).navigate(action);
+
+        });
     }
 
     @Override

@@ -5,7 +5,6 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import android.util.Log;
 
 import com.example.mealitjava.model.MealResponse;
-import com.example.mealitjava.remoteDataSource.CategoryCallBack;
 import com.example.mealitjava.remoteDataSource.NetworkCallback;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -49,8 +48,10 @@ public class MealsItemRemoteImpl implements MealsItemRemote{
 //            }
 //        });
     }
+
+
     @Override
-    public void makeCategoryCall(CategoryCallBack categoryCallBack) {
+    public void makeCategoryCall(NetworkCallback categoryCallBack) {
         Disposable d1 = apiMethods.getCategories().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(categoryResponse -> {
@@ -71,30 +72,40 @@ public class MealsItemRemoteImpl implements MealsItemRemote{
                         throwable -> countryCallBack.onFailureResult(throwable.getMessage()));
 
     }
+    @Override
+    public void makeIngredientCall(NetworkCallback ingredientCallBack) {
+        Disposable d3 = apiMethods.getIngredients().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(ingredientResponse -> {
+                            ingredientCallBack.onSuccessIngredient(ingredientResponse.getMeals());
+                            Log.i(TAG, "makeIngCall: " + ingredientResponse.getMeals());
+                        },
+                        throwable -> ingredientCallBack.onFailureResult(throwable.getMessage()));
+    }
 
     @Override
     public void makeCallFilter(NetworkCallback filterCallBack, String name, char c) {
             if(c == 'a') {
                 Single<MealResponse> allMealsByArea = apiMethods.getAllMealsByArea(name);
-                Disposable d2 = allMealsByArea.subscribeOn(Schedulers.io())
+                Disposable d4 = allMealsByArea.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(MealResponse -> {
-                                    filterCallBack.onSuccessMealByFilter(MealResponse.getMeals());
-                                    Log.i(TAG, "makeCountryCall: " + MealResponse.getMeals().get(0).strArea);},
+                                    filterCallBack.onSuccessMealByFilter(MealResponse);
+                                    Log.i(TAG, "makeCountryCall: " + MealResponse.getMeals().get(0));},
                                 throwable -> filterCallBack.onFailureResult(throwable.getMessage()));
 
             } else if (c == 'i') {
                 Single<MealResponse> allMealsByIngredient = apiMethods.getAllMealsByIngredient(name);
-                Disposable d2 = allMealsByIngredient.subscribeOn(Schedulers.io())
+                Disposable d5 = allMealsByIngredient.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(MealResponse -> filterCallBack.onSuccessMealByFilter(MealResponse.getMeals()),
+                        .subscribe(MealResponse -> filterCallBack.onSuccessMealByFilter(MealResponse),
                                 throwable -> filterCallBack.onFailureResult(throwable.getMessage()));
 
             } else if (c == 'c') {
                 Single<MealResponse> allMealsByCategory = apiMethods.getAllMealsByCategory(name);
-                Disposable d2 = allMealsByCategory.subscribeOn(Schedulers.io())
+                Disposable d6 = allMealsByCategory.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(MealResponse -> filterCallBack.onSuccessMealByFilter(MealResponse.getMeals()),
+                        .subscribe(MealResponse -> filterCallBack.onSuccessMealByFilter(MealResponse),
                                 throwable -> filterCallBack.onFailureResult(throwable.getMessage()));
             }
     }
