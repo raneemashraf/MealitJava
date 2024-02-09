@@ -2,6 +2,7 @@ package com.example.mealitjava.MealDetails.presenter;
 
 import com.example.mealitjava.MealDetails.view.MealsDetailsView;
 import com.example.mealitjava.model.MealsItem;
+import com.example.mealitjava.model.PlannerModel;
 import com.example.mealitjava.model.repository.mealsRepo.MealsRepository;
 
 public class MealDetailsPresenterImpl implements MealDetailsPresenter {
@@ -15,7 +16,6 @@ public class MealDetailsPresenterImpl implements MealDetailsPresenter {
         }
         return mealDetailsPresenterImpl;
     }
-
     public MealDetailsPresenterImpl(MealsRepository mealsRepository) {
         this.mealsRepository = mealsRepository;
     }
@@ -24,5 +24,9 @@ public class MealDetailsPresenterImpl implements MealDetailsPresenter {
     @Override
     public void addMealToFavorite(MealsItem meal) {
         mealsRepository.insertMealToFavorite(meal);
+    }
+    @Override
+    public void addMealToPlanner(PlannerModel meal) {
+        mealsRepository.insertMealToPlanner(meal);
     }
 }

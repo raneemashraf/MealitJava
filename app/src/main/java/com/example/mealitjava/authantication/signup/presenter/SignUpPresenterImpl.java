@@ -3,6 +3,7 @@ package com.example.mealitjava.authantication.signup.presenter;
 import com.example.mealitjava.authantication.signup.view.SignUpViewInterface;
 import com.example.mealitjava.model.repository.authRepo.AuthRepository;
 import com.example.mealitjava.remoteDataSource.SignUpCallBack;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpPresenterImpl implements SignUpPresenter, SignUpCallBack {
@@ -24,6 +25,12 @@ public class SignUpPresenterImpl implements SignUpPresenter, SignUpCallBack {
     @Override
     public void signUp(String email, String password) {
         authRepository.signUp( email, password,this);
+    }
+
+    @Override
+    public void signUpWithGoogle(AuthCredential authCredential) {
+        //authRepository.signUpWithGoogle(, this);
+
     }
 
     @Override

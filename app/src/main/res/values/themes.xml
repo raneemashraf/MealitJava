@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/lightGreen</item>
         <item name="colorOnPrimary">@color/bigPage</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/bigPage</item>
+        <item name="colorSecondary">@color/darKsa</item>
         <item name="colorSecondaryVariant">@color/whitgrawy</item>
         <!-- Status bar color. -->
 

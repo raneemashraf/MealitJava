@@ -16,6 +16,5 @@ public interface NetworkCallback {
      void onSuccessCountry(List<Country> countries);
      void onSuccessCategory(List<Category> category);
      public void onSuccessIngredient(List<IngredientList> ingredientLists);
-     public void onSuccessPlanner(List<MealsItem> meals);
 
-     }
+}

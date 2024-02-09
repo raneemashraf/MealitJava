@@ -1,4 +1,4 @@
-package com.example.mealitjava.favorite.view;
+package com.example.mealitjava.planner.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,34 +13,42 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealitjava.R;
+import com.example.mealitjava.favorite.view.OnClickFavoriteMeal;
+import com.example.mealitjava.model.MealPlannerAndMealConverter;
 import com.example.mealitjava.model.MealsItem;
+import com.example.mealitjava.model.PlannerModel;
+import com.example.mealitjava.planner.presenter.PlannerPresenterInterface;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder>{
+public class PlannerAdapter extends RecyclerView.Adapter<PlannerAdapter.ViewHolder>{
 
     private final Context context;
-    private List<MealsItem> favMealsList;
+    private List<PlannerModel> PlannerMealsList = new ArrayList<>();
+    PlannerPresenterInterface plannerPresenterInterface;
     public OnDeleteClickListener onDeleteClickListener;
-    DatabaseReference databaseReferenceFavorite = FirebaseDatabase
+    DatabaseReference databaseReferencePlanner = FirebaseDatabase
             .getInstance()
             .getReference().child("user")
-            .child(FirebaseAuth.getInstance().getUid())
-            .child("favourite");
+            .child(FirebaseAuth.getInstance().getUid())  // Ensure user is authenticated before accessing UID
+            .child("plan");
 
-    public void setFavMealsListList(List<MealsItem> favMealsList) {
-        this.favMealsList = favMealsList;
+    public void setPlannerMealsList(List<PlannerModel> PlannerMealsList) {
+        this.PlannerMealsList = PlannerMealsList;
+        notifyDataSetChanged();
     }
 
     private OnClickFavoriteMeal listener;
 
-    public FavoriteAdapter(Context context, List<MealsItem> favMealsList ) {
+    public PlannerAdapter(Context context, List<PlannerModel> favMealsList ) {
         this.context = context;
-        this.favMealsList = favMealsList;
+        this.PlannerMealsList = favMealsList;
+        //plannerPresenterInterface = new PlannerPresenterImpl(context);
     }
 
     @NonNull
@@ -48,17 +56,18 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View v = layoutInflater.inflate(R.layout.item_fav_meal,parent,false);
-        FavoriteAdapter.ViewHolder vh = new FavoriteAdapter.ViewHolder(v);
+        PlannerAdapter.ViewHolder vh = new PlannerAdapter.ViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MealsItem mealsItem = favMealsList.get(position);
-        holder.mealNameTextView.setText(favMealsList.get(position).strMeal);
+        PlannerModel mealsItem = PlannerMealsList.get(position);
+        holder.mealNameTextView.setText(mealsItem.strMeal);
         Glide.with(context)
-                .load(favMealsList.get(position).strMealThumb)
+                .load(PlannerMealsList.get(position).strMealThumb)
                 .into(holder.mealImage);
+
 //        holder.cardView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -74,14 +83,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
         holder.deleteMealIcon.setOnClickListener(view -> {
             onDeleteClickListener.onItemClickListener(mealsItem);
-            //databaseReferenceFavorite.removeValue();
-            databaseReferenceFavorite.child(mealsItem.idMeal).removeValue();
-
+            databaseReferencePlanner.child(mealsItem.idMeal).removeValue();
         });
 
         holder.cardView.setOnClickListener(v -> {
-            FavoriteFragmentDirections.ActionFavoriteFragmentToMealDetailsFragment action =
-                    FavoriteFragmentDirections.actionFavoriteFragmentToMealDetailsFragment(mealsItem);
+            MealsItem meal = MealPlannerAndMealConverter.getMealFromMealPlanner(mealsItem);
+            PlannerFragmentDirections.ActionPlannerFragmentToMealDetailsFragment action =
+                    PlannerFragmentDirections.actionPlannerFragmentToMealDetailsFragment(meal);
             Navigation.findNavController(v).navigate(action);
 
         });
@@ -89,7 +97,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return favMealsList.size();
+        return PlannerMealsList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -111,7 +119,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         }
     }
     public interface OnDeleteClickListener{
-        void onItemClickListener(MealsItem mealsItem);
+        void onItemClickListener(PlannerModel mealsItem);
     }
 
 }

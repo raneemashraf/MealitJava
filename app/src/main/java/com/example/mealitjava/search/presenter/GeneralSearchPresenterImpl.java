@@ -56,16 +56,13 @@ public class GeneralSearchPresenterImpl implements GeneralSearchPresenterInterfa
     }
 
     @Override
-    public void onSuccessPlanner(List<MealsItem> meals) {
-
-    }
-
-    @Override
     public void onSuccessResult(MealsItem mealsItem) {
+
     }
 
     @Override
     public void onFailureResult(String errorMessage) {
+
     }
 
 

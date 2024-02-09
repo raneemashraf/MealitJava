@@ -2,7 +2,6 @@ package com.example.mealitjava.model;
 
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -15,24 +14,16 @@ public class MealsItem implements Serializable {
 	@NonNull
 	public String idMeal;
 	public String strMeal;
-	@ColumnInfo(name = "day", defaultValue = "temp")
-	@NonNull
-	public String day;
-	public void setDay(String day) {
-		this.day = day;
-	}
-	public String getDay() {
-		return day;
-	}
-	public String getIdMeal() {
-		return idMeal;
-	}
-	public String date;
 
+	public String dateModified;
+	@Ignore
+	public Object strDrinkAlternate;
 	public String strCategory;
 	public String strArea;
 	public String strInstructions;
 	public String strMealThumb;
+	@Ignore
+	public Object strTags;
 	public String strYoutube;
 	public String strIngredient1;
 	public String strIngredient2;
@@ -82,12 +73,5 @@ public class MealsItem implements Serializable {
 
 	@Ignore
 	public Object strCreativeCommonsConfirmed;
-
-	@Ignore
-	public Object dateModified;
-	@Ignore
-	public Object strDrinkAlternate;
-	@Ignore
-	public Object strTags;
 
 }

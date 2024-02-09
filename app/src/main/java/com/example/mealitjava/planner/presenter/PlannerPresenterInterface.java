@@ -2,17 +2,13 @@ package com.example.mealitjava.planner.presenter;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.mealitjava.model.MealsItem;
+import com.example.mealitjava.model.PlannerModel;
 
 import java.util.List;
 
 public interface PlannerPresenterInterface {
-
-    void getSearchedMeals(String search);
-
-    void addMealPlanner(MealsItem meal);
-
-    void deletePlannerMeal(MealsItem meal);
-
-    LiveData<List<MealsItem>> getPlannedDayMeals(String day);
+    //public void showPlannedMeals();
+    //LiveData<List<MealsItem>> showPlannedMealsByDate(String date);
+    public void deletePlannerMeal(PlannerModel meal);
+    LiveData<List<PlannerModel>> getPlanedMeals(String d);
 }

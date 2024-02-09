@@ -7,7 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.mealitjava.model.MealsItem;
-    @Database(entities = {MealsItem.class } , version = 1,exportSchema = false)
+import com.example.mealitjava.model.PlannerModel;
+
+@Database(entities = {MealsItem.class , PlannerModel.class} , version = 1,exportSchema = false)
     public abstract class DataBase extends RoomDatabase {
         public static final String DATABASE_NAME="databaseMeal";
         private static DataBase instance = null;

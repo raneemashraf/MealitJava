@@ -50,6 +50,9 @@ public class SignUpFragment extends Fragment implements SignUpViewInterface {
         binding.TxtLogin.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_loginFragment);
         });
+        binding.skipText.setOnClickListener(v -> {
+            goToHomeActivity();
+        });
 
     }
 

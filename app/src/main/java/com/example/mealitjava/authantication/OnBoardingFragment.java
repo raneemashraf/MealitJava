@@ -14,6 +14,7 @@ import com.example.mealitjava.R;
 import com.example.mealitjava.databinding.FragmentOnBoardingBinding;
 
 
+
 public class OnBoardingFragment extends Fragment {
     FragmentOnBoardingBinding fragmentonboarding;
     public OnBoardingFragment() {
@@ -37,5 +38,6 @@ public class OnBoardingFragment extends Fragment {
         fragmentonboarding.signUpBtn.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_OnBoardingFragment_to_signUpFragment);
         });
+
     }
 }

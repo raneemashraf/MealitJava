@@ -31,7 +31,7 @@ public class FavMealPresenterImp implements FavMealPresenter {
 
     @Override
     public void getMeals() {
-       LiveData<List<MealsItem>> result = mealsRepository.getFavMeals();
+       LiveData<List<MealsItem>>result = mealsRepository.getFavMeals();
         favView.showFav(result);
     }
     @Override

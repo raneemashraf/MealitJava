@@ -36,6 +36,12 @@ public class HomePresenterImpl implements HomePresenter, NetworkCallback {
     public void getCategory() {
         mealsRepository.getCategory(this);
     }
+
+    @Override
+    public void logOut() {
+        mealsRepository.deleteAllMeals();
+    }
+
     @Override
     public void onSuccessResult(MealsItem mealsItem) {
         homeInterfaceView.showMeal(mealsItem);
@@ -52,12 +58,6 @@ public class HomePresenterImpl implements HomePresenter, NetworkCallback {
     @Override
     public void onSuccessIngredient(List<IngredientList> ingredientLists) {
     }
-
-    @Override
-    public void onSuccessPlanner(List<MealsItem> meals) {
-
-    }
-
     @Override
     public void onSuccessMealByFilter(MealResponse meals) {
 

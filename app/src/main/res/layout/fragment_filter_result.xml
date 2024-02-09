@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -94,5 +94,5 @@
             app:layout_constraintGuide_begin="47dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 

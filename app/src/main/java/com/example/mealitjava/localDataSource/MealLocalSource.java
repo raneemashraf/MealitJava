@@ -3,17 +3,19 @@ package com.example.mealitjava.localDataSource;
 import androidx.lifecycle.LiveData;
 
 import com.example.mealitjava.model.MealsItem;
+import com.example.mealitjava.model.PlannerModel;
 
 import java.util.List;
-
-import io.reactivex.rxjava3.core.Completable;
 
 public interface MealLocalSource {
     void insertMealToFavorite(MealsItem meal);
     void deleteFavoriteMeal(MealsItem meal);
     LiveData<List<MealsItem>> getFavoriteMeals();
 
-    Completable deletePlannedMeal(MealsItem meal);
-    LiveData<List<MealsItem>> getStoredMealsByDay(String day);
+    void insertMealToPlanner(PlannerModel meal);
+    void deletePlannerMeal(PlannerModel meal);
+    LiveData<List<PlannerModel>> getPlannerMeals(String d);
 
+    void deleteAllMeals();
+    void deleteAllPlanner();
 }

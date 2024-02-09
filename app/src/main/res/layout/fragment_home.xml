@@ -43,8 +43,8 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/imageViewDishOfTheDay"
-                    android:layout_width="183dp"
-                    android:layout_height="182dp"
+                    android:layout_width="196dp"
+                    android:layout_height="196dp"
                     android:scaleType="fitXY"
 
                     app:riv_corner_radius_top_left="16dp"
@@ -53,22 +53,25 @@
                 <TextView
                     android:id="@+id/txtViewMealNameDishOfTheDay"
                     style="@style/header_three"
-                    android:layout_width="159dp"
-                    android:layout_height="43dp"
+                    android:layout_width="130dp"
+                    android:layout_height="51dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="4dp"
                     android:textAlignment="textStart"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.454"
+                    app:layout_constraintStart_toEndOf="@+id/imageViewDishOfTheDay"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Traditional French omelette" />
 
                 <TextView
                     android:id="@+id/textViewCountryDishOfTheDay"
                     style="@style/header_three"
-                    android:layout_width="162dp"
-                    android:layout_height="21dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/barlow"
                     android:textAlignment="textStart"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="@+id/txtViewMealNameDishOfTheDay"
@@ -81,14 +84,15 @@
                 <TextView
                     android:id="@+id/textViewCategoryRandom"
                     style="@style/header_three"
-                    android:layout_width="161dp"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/barlow"
                     android:textAlignment="textStart"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="@+id/textViewCountryDishOfTheDay"
-                    app:layout_constraintHorizontal_bias="0.666"
-                    app:layout_constraintStart_toEndOf="@+id/imageViewDishOfTheDay"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/textViewCountryDishOfTheDay"
                     app:layout_constraintTop_toBottomOf="@+id/textViewCountryDishOfTheDay"
                     tools:text="Breakfast" />
 
@@ -100,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="16dp" />
+            app:layout_constraintGuide_begin="48dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/leftGuideline"
@@ -149,6 +153,19 @@
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="cardViewRandomMeal,textView"
             tools:layout_editor_absoluteY="341dp" />
+
+        <ImageView
+            android:id="@+id/logoutButton"
+            android:layout_width="46dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="360dp"
+            app:layout_constraintBottom_toTopOf="@+id/topGuideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/baseline_exit_to_app_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

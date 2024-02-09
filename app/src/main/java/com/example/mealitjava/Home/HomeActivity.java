@@ -20,5 +20,9 @@ public class HomeActivity extends AppCompatActivity  {
         bottomNavigationView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+
+       // if(AuthRepositoryImpl.getInstance().isAuthenticated()) {}
     }
+
+
 }

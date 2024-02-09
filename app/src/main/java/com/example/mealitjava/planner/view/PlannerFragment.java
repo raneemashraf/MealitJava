@@ -1,242 +1,178 @@
 package com.example.mealitjava.planner.view;
 
-import android.app.Dialog;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mealitjava.InternetConnection;
+import com.example.mealitjava.MainActivity;
 import com.example.mealitjava.R;
-import com.example.mealitjava.databinding.FragmentPlannerBinding;
 import com.example.mealitjava.localDataSource.MealLocalSourceImpl;
-import com.example.mealitjava.model.MealsItem;
+import com.example.mealitjava.model.DateFormatter;
+import com.example.mealitjava.model.PlannerModel;
+import com.example.mealitjava.model.repository.authRepo.AuthRepositoryImpl;
 import com.example.mealitjava.model.repository.mealsRepo.MealsRepositoryImpl;
 import com.example.mealitjava.planner.presenter.PlannerPresenterImpl;
 import com.example.mealitjava.planner.presenter.PlannerPresenterInterface;
 import com.example.mealitjava.remoteDataSource.api.MealsItemRemoteImpl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-public class PlannerFragment extends Fragment implements PlannerClickListener,PlannerViewInterface{
-    FragmentPlannerBinding binding;
-    private DayAdapter
-            wednesdayAdapter, saturdayAdapter,
-            sundayAdapter, mondayAdapter, tuesdayAdapter, thursdayAdapter, fridayAdapter;
-
-    private List<MealsItem> allMeals;
-    public static Dialog searchDialog;
-    private String day;
-    private PlannerPresenterInterface planPresenterInterface;
+public class PlannerFragment extends Fragment implements PlannerView{
+    PlannerPresenterInterface plannerPresenterInterface;
+    PlannerAdapter plannerAdapter;
+    RecyclerView recyclerView;
+    GridLayoutManager gridLayoutManager;
+    CardView calendarCard;
+    TextView dateTextView;
+    Calendar now;
+    int year, month, datOfMonth;
+    DatePickerDialog.OnDateSetListener onDateSetListener;
+    private InternetConnection internetConnection;
 
     public PlannerFragment() {
         // Required empty public constructor
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentPlannerBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        return inflater.inflate(R.layout.fragment_planner, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        planPresenterInterface = new PlannerPresenterImpl(this,
-                new MealsRepositoryImpl(new MealsItemRemoteImpl(), new MealLocalSourceImpl(getContext())));
-        allMeals = new ArrayList<>();
-        day = null;
-        saturdayAdapter = new DayAdapter(getContext(), PlannerFragment.this);
-        sundayAdapter = new DayAdapter(getContext(), PlannerFragment.this);
-        mondayAdapter = new DayAdapter(getContext(), PlannerFragment.this);
-        tuesdayAdapter = new DayAdapter(getContext(), PlannerFragment.this);
-        thursdayAdapter = new DayAdapter(getContext(), PlannerFragment.this);
-        wednesdayAdapter = new DayAdapter(getContext(), PlannerFragment.this);
-        fridayAdapter = new DayAdapter(getContext(), PlannerFragment.this);
+        internetConnection = new InternetConnection(requireContext());
 
+        if (!AuthRepositoryImpl.getInstance().isAuthenticated()) {
+            openGotoSignUpDialogue();
+        } else {
 
-        planPresenterInterface.getPlannedDayMeals("saturday")
-                .observe((LifecycleOwner) getContext(), new Observer<List<MealsItem>>() {
-                    @Override
-                    public void onChanged(List<MealsItem> meals) {
-                        saturdayAdapter.setAllMeals(meals);
-                        binding.saturdayRecyclerView.setAdapter(saturdayAdapter);
-                        saturdayAdapter.notifyDataSetChanged();
+            calendarCard = view.findViewById(R.id.card_date);
+            dateTextView = view.findViewById(R.id.tv_clendar);
+            recyclerView = view.findViewById(R.id.mealWeekPlan_recyclerView_weekplan);
 
-                    }
-                });
+            String date = DateFormatter.getString(new Date());
+            plannerPresenterInterface = new PlannerPresenterImpl(
+                    new MealsRepositoryImpl(new MealsItemRemoteImpl(),
+                            new MealLocalSourceImpl(getContext(), date)), this);
 
-        planPresenterInterface.getPlannedDayMeals("sunday").observe((LifecycleOwner) getContext(), new Observer<List<MealsItem>>() {
-            @Override
-            public void onChanged(List<MealsItem> meals) {
-                sundayAdapter.setAllMeals(meals);
-              binding.sundayRecyclerView.setAdapter(sundayAdapter);
-                sundayAdapter.notifyDataSetChanged();
+            plannerAdapter = new PlannerAdapter(getContext(), new ArrayList<>());
+            gridLayoutManager = new GridLayoutManager(getContext(), 2);
+            gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            recyclerView.setAdapter(plannerAdapter);
 
-            }
-        });
+            plannerAdapter.onDeleteClickListener = this::deletePlannerMeal;
+            dateTextView.setText(date);
 
-        planPresenterInterface.getPlannedDayMeals("monday").observe((LifecycleOwner) getContext(),
-                new Observer<List<MealsItem>>() {
-            @Override
-            public void onChanged(List<MealsItem> meals) {
-                mondayAdapter.setAllMeals(meals);
-             binding.mondayRecyclerView.setAdapter(mondayAdapter);
-                mondayAdapter.notifyDataSetChanged();
-
-            }
-        });
-
-        planPresenterInterface.getPlannedDayMeals("tuesday").observe((LifecycleOwner) getContext(), new Observer<List<MealsItem>>() {
-            @Override
-            public void onChanged(List<MealsItem> meals) {
-                tuesdayAdapter.setAllMeals(meals);
-              binding.tuesdayRecyclerView.setAdapter(tuesdayAdapter);
-                tuesdayAdapter.notifyDataSetChanged();
-
-            }
-        });
-        planPresenterInterface.getPlannedDayMeals("wednesday").observe((LifecycleOwner) getContext(), new Observer<List<MealsItem>>() {
-            @Override
-            public void onChanged(List<MealsItem> meals) {
-                wednesdayAdapter.setAllMeals(meals);
-               binding.wednesdayRecyclerView.setAdapter(wednesdayAdapter);
-                wednesdayAdapter.notifyDataSetChanged();
-
-            }
-        });
-        planPresenterInterface.getPlannedDayMeals("thursday")
-                .observe((LifecycleOwner) getContext(), new Observer<List<MealsItem>>() {
-                    @Override
-                    public void onChanged(List<MealsItem> meals) {
-                        thursdayAdapter.setAllMeals(meals);
-                      binding.thursdayRecyclerView.setAdapter(thursdayAdapter);
-                        thursdayAdapter.notifyDataSetChanged();
-
-                    }
-                });
-
-        planPresenterInterface.getPlannedDayMeals("friday")
-                .observe((LifecycleOwner) getContext(), new Observer<List<MealsItem>>() {
-                    @Override
-                    public void onChanged(List<MealsItem> meals) {
-                        fridayAdapter.setAllMeals(meals);
-                       binding.fridayRecyclerView.setAdapter(fridayAdapter);
-                        fridayAdapter.notifyDataSetChanged();
-
-                    }
-                });
-
-        binding.saturdayAddMaterialButton.setOnClickListener(v -> {
-            day = "saturday";
-            showDialog(day);
-        });
-        binding.sundayAddMaterialButton.setOnClickListener(v -> {
-            day = "sunday";
-            showDialog(day);
-        });
-        binding.mondayAddMaterialButton.setOnClickListener(v -> {
-            day = "monday";
-            showDialog(day);
-
-        });
-        binding.tuesdayAddMaterialButton.setOnClickListener(v -> {
-            day = "tuesday";
-            showDialog(day);
-
-        });
-        binding.wednesdayAddMaterialButton.setOnClickListener(v -> {
-            day = "wednesday";
-            showDialog(day);
-        });
-        binding.thursdayAddMaterialButton.setOnClickListener(v -> {
-            day = "thursday";
-            showDialog(day);
-
-        });
-        binding.fridayAddMaterialButton.setOnClickListener(v -> {
-            day = "friday";
-            showDialog(day);
-
-        });
-
-    }
-
-    public void showDialog(String day) {
-        View dialogLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_search, null);
-        searchDialog = new Dialog(getContext());
-        searchDialog.setContentView(dialogLayout);
-        searchDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        searchDialog.show();
-        RecyclerView searchResultCardRecyclerView = searchDialog.findViewById(R.id.searchResultCardRecyclerView);
-        DialogSearchAdapter dialogSearchAdapter = new DialogSearchAdapter(getContext(), PlannerFragment.this, day);
-
-        EditText searchDialogEditText = searchDialog.findViewById(R.id.searchDialogEditText);
-
-        searchDialogEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                planPresenterInterface.getSearchedMeals(charSequence + "");
-                try {
-                    Thread.sleep(700);
-
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
+            plannerPresenterInterface.getPlanedMeals(date).observe(getViewLifecycleOwner(),
+                    new Observer<List<PlannerModel>>() {
+                        @Override
+                        public void onChanged(List<PlannerModel> plannerModels) {
+                            plannerAdapter.setPlannerMealsList(plannerModels);
+                        }
+                    });
+            calendarCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDatePickerDialog();
                 }
-                dialogSearchAdapter.setAllMeals(allMeals);
-                searchResultCardRecyclerView.setAdapter(dialogSearchAdapter);
-                searchResultCardRecyclerView.setVisibility(View.VISIBLE);
-                dialogSearchAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-    }
-
-    @Override
-    public void showPlannerMeals(List<MealsItem> meals) {
-        if (meals != null) {
-            allMeals.clear();
-            for (MealsItem meal : meals)
-                allMeals.add(meal);
+            });
         }
     }
-    @Override
-    public void addMealToDay(MealsItem meal) {
-        planPresenterInterface.addMealPlanner(meal);
+
+    private void showDatePickerDialog() {
+        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SimpleDateFormat")
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String d= DateFormatter.getString(year,month,dayOfMonth);
+                dateTextView.setText(d);
+                plannerPresenterInterface.getPlanedMeals(d).observe(getViewLifecycleOwner(),
+                        new Observer<List<PlannerModel>>() {
+                    @Override
+                    public void onChanged(List<PlannerModel> planDtos) {
+                        plannerAdapter.setPlannerMealsList(planDtos);
+
+                    }
+                });
+            }
+        };
+
+        now = Calendar.getInstance();
+        year = now.get(Calendar.YEAR);
+        month = now.get(Calendar.MONTH);
+        datOfMonth = now.get(Calendar.DAY_OF_MONTH);
+
+        // tripDate = getView().findViewById(R.id.calenderTv);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                onDateSetListener, year, month, datOfMonth);
+        datePickerDialog.setTitle("Please select a date.");
+        datePickerDialog.show();
+    }
+
+
+    private void openGotoSignUpDialogue() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Sign Up Required")
+                .setMessage("Please sign Up to access this feature.")
+                .setPositiveButton(R.string.singup, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        startActivity(new Intent(requireActivity(), MainActivity.class));
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null).show();
     }
 
     @Override
-    public void deleteMealFromDay(MealsItem meal) {
-        planPresenterInterface.deletePlannerMeal(meal);
-        saturdayAdapter.notifyDataSetChanged();
-        sundayAdapter.notifyDataSetChanged();
-        mondayAdapter.notifyDataSetChanged();
-        tuesdayAdapter.notifyDataSetChanged();
-        wednesdayAdapter.notifyDataSetChanged();
-        thursdayAdapter.notifyDataSetChanged();
-        fridayAdapter.notifyDataSetChanged();
+    public void showPlanner(LiveData<List<PlannerModel>> meal) {
+//        meal.observe(getViewLifecycleOwner(), new Observer<List<PlannerModel>>() {
+//            @Override
+//            public void onChanged(List<PlannerModel> plannerModels) {
+//
+//            }
+//        });
+    }
+
+
+    @Override
+    public void deletePlannerMeal(PlannerModel meal) {
+        if (internetConnection.isConnectedWifi() || internetConnection.isConnectedMobile()){
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.Delete_Meal)
+                    .setMessage(R.string.Are_you_sure_you_want_to_delete_this_meal)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            plannerPresenterInterface.deletePlannerMeal(meal);
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
+        } else {
+            Toast.makeText(requireContext(), "Please Check Your Internet Connection And Try Again", Toast.LENGTH_LONG).show();
+        }
     }
 
 }

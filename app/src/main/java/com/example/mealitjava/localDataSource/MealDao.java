@@ -4,32 +4,35 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import androidx.room.OnConflictStrategy;
+
 import com.example.mealitjava.model.MealsItem;
+import com.example.mealitjava.model.PlannerModel;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Completable;
-
 @Dao
 public interface MealDao {
-    @Query("SELECT * FROM meal")
-    LiveData<List<MealsItem>> getAllFavoriteMeals();
+       @Query("SELECT * FROM meal where dateModified = 'fav' ")
+        LiveData<List<MealsItem>> getAllFavoriteMeals();
+       @Insert(onConflict = OnConflictStrategy.IGNORE)
+        void insertMealToFavorite(MealsItem meal);
+        @Delete
+        void deleteMealFromFavorite(MealsItem meal);
+
+
+    @Query("SELECT * FROM weekPlan where date =:date ")
+    LiveData<List<PlannerModel>> getAllPlannerMeals(String date);
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertMealToFavorite(MealsItem meal);
+    void insertMealToPlanner(PlannerModel meal);
     @Delete
-    void deleteMealFromFavorite(MealsItem meal);
+    void deleteMealFromPlanner(PlannerModel meal);
 
-
-    @Query("SELECT * FROM meal where day = :day")
-    LiveData<List<MealsItem>> getMealsByDay(String day);
-    @Delete
-    Completable deleteFromPlan(MealsItem meal);
-
-
-//    @Insert(onConflict = OnConflictStrategy.IGNORE)
-//    void insertMealToPlanner(MealsItem meal);
+    @Query("DELETE FROM meal")
+    void deleteAllMeals();
+    @Query("DELETE FROM weekPlan")
+    void deleteAllPlanner();
 
 }

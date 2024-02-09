@@ -15,7 +15,7 @@ public class LogInPresenterImpl implements LogInPresenter, LogInCallBack {
     }
     @Override
     public void logIn(String email, String pass) {
-        authRepositoryImpl.LogIn(email,pass,this );
+        authRepositoryImpl.LogIn(email,pass,this);
     }
 
     @Override

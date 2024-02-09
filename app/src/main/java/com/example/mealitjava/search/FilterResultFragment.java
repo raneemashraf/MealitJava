@@ -79,10 +79,11 @@ public class FilterResultFragment extends Fragment implements SearchViewInterfac
         });
     }
 
+
     @Override
     public void showMeals(List<MealsItem> meals) {
         if(meals != null){
-            Log.i(TAG, "showMeals: " + meals.get(0).strMeal);
+            Log.i(TAG, "showMeals: "+meals.get(0).strMeal);
             filterResultAdapter = new FilterResultAdapter(meals);
             filterResultAdapter.setAllMeals(meals);
             binding.mealResultsRecyclerView.setAdapter(filterResultAdapter);

@@ -55,12 +55,6 @@ public class SearchPresenterImpl implements SearchPresenterInterface , NetworkCa
     public void onSuccessIngredient(List<IngredientList> ingredientLists) {
 
     }
-
-    @Override
-    public void onSuccessPlanner(List<MealsItem> meals) {
-
-    }
-
     @Override
     public void onSuccessMealByFilter(MealResponse meals) {
 

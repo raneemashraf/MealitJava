@@ -2,11 +2,13 @@ package com.example.mealitjava.Home.view;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,14 +23,20 @@ import com.bumptech.glide.Glide;
 import com.example.mealitjava.Home.presenter.HomePresenter;
 import com.example.mealitjava.Home.presenter.HomePresenterImpl;
 import com.example.mealitjava.Home.view.HomeFragmentDirections.ActionHomeFragmentToMealDetailsFragment;
+import com.example.mealitjava.MainActivity;
 import com.example.mealitjava.R;
+import com.example.mealitjava.localDataSource.MealLocalSource;
+import com.example.mealitjava.localDataSource.MealLocalSourceImpl;
 import com.example.mealitjava.model.Category;
+import com.example.mealitjava.model.DateFormatter;
 import com.example.mealitjava.model.MealsItem;
 import com.example.mealitjava.model.repository.mealsRepo.MealsRepositoryImpl;
 import com.example.mealitjava.remoteDataSource.api.MealsItemRemoteImpl;
+import com.google.firebase.auth.FirebaseAuth;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -41,6 +49,8 @@ public class HomeFragment extends Fragment implements HomeInterfaceView {
     RoundedImageView imageViewDishOfTheDay;
     RecyclerView recyclerViewCategory;
     CardView cardView;
+    ImageView logoutimageView;
+    MealLocalSource mealLocalSource;
 
     public HomeFragment() {
     }
@@ -51,25 +61,40 @@ public class HomeFragment extends Fragment implements HomeInterfaceView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         mealsItemRemote = new MealsItemRemoteImpl();
         homePresenter = new HomePresenterImpl(this,
                 MealsRepositoryImpl.getInstance(MealsItemRemoteImpl.getInstance()));
         homePresenter.getRandomMeals();
         homePresenter.getCategory();
+        String date = DateFormatter.getString(new Date());
+        mealLocalSource = MealLocalSourceImpl.getInstance(getContext(),date);
 
         super.onViewCreated(view, savedInstanceState);
+
         textViewMealName = view.findViewById(R.id.txtViewMealNameDishOfTheDay);
         textViewMealCountry = view.findViewById(R.id.textViewCountryDishOfTheDay);
         imageViewDishOfTheDay = view.findViewById(R.id.imageViewDishOfTheDay);
         cardView = view.findViewById(R.id.cardViewRandomMeal);
         textViewMealCategory = view.findViewById(R.id.textViewCategoryRandom);
         recyclerViewCategory=view.findViewById(R.id.recycelrViewCategory);
-
+        logoutimageView = view.findViewById(R.id.logoutButton);
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
         categoryAdapter = new CategoryAdapter(new ArrayList<>());
         recyclerViewCategory.setLayoutManager(gridLayoutManager);
         recyclerViewCategory.setAdapter(categoryAdapter);
 
+        logoutimageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+//                homePresenter.logOut();
+                mealLocalSource.deleteAllMeals();
+                mealLocalSource.deleteAllPlanner();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 //
 //    @Override
