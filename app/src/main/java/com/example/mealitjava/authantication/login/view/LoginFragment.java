@@ -1,5 +1,6 @@
 package com.example.mealitjava.authantication.login.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.mealitjava.Home.view.HomeActivity;
+import com.example.mealitjava.Home.HomeActivity;
 import com.example.mealitjava.authantication.login.presenter.LogInPresenter;
 import com.example.mealitjava.authantication.login.presenter.LogInPresenterImpl;
 import com.example.mealitjava.databinding.FragmentLoginBinding;
@@ -73,13 +74,18 @@ public class LoginFragment extends Fragment implements LogInViewInterface {
     private void login() {
         String userName = binding.emailET.getText().toString();
         String pass = binding.passwordET.getText().toString();
-        //if (isAllDataFilled() && checkValidation(userName, pass)) {
+
         logInPresenter.logIn(userName, pass);
-        // }
+
+
     }
     private void goToHomeActivity() {
         Intent intent = new Intent(binding.getRoot().getContext(), HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         binding.getRoot().getContext().startActivity(intent);
     }
+    public Context getContextInFragment(){
+        return getContext();
+    }
+
 }

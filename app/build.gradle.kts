@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
+    id ("androidx.navigation.safeargs")
 }
 
 android {
@@ -42,6 +43,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("androidx.annotation:annotation:1.7.1")
+    implementation("androidx.mediarouter:mediarouter:1.6.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -52,9 +54,12 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.7.6")
     implementation("androidx.navigation:navigation-ui:2.7.6")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-// Import the Firebase BoM
+
+    //Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.google.android.gms:play-services-auth:20.4.1")
+
 
     //navigation
     implementation ("androidx.navigation:navigation-fragment:2.5.3")
@@ -74,7 +79,32 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
     //youtubeVideo
-    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
+    //room
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    //Lotti Dependency
+    implementation ("com.airbnb.android:lottie:4.0.0")
+
+    //splash
+    implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
+
+    //room adapter Rx
+    implementation ("com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0")
+    implementation("androidx.room:room-rxjava3:$2.6.1")
+
+    //Rx android
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
+
+    //database firebase
+    implementation("com.google.firebase:firebase-database")
+
 
 
 }

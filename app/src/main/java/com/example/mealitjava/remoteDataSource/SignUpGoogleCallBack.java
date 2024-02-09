@@ -1,4 +1,4 @@
-package com.example.mealitjava.remotesource;
+package com.example.mealitjava.remoteDataSource;
 
 import com.google.firebase.auth.FirebaseUser;
 

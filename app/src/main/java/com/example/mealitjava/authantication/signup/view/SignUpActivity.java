@@ -22,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        signUpBtn = findViewById(R.id.SignUpBtn);
+        signUpBtn = findViewById(R.id.signUpBtn);
 
         signUpPresenter = new SignUpPresenterImpl(AuthRepositoryImpl.getInstance(),this);
 
@@ -31,7 +31,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     private void initUi(){
         etName = findViewById(R.id.etName);
         etPass = findViewById(R.id.etPassword);
-        signUpBtn = findViewById(R.id.SignUpBtn);
+        signUpBtn = findViewById(R.id.signUpBtn);
 
         signUpBtn.setOnClickListener(view -> {
             signUpPresenter.signUp(etName.getText().toString(),etPass.getText().toString());
@@ -44,6 +44,11 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     @Override
     public void OnFailure(String message) {
         Toast.makeText(this,"fail",Toast.LENGTH_LONG);
+
+    }
+
+    @Override
+    public void onSuccessGoogle(FirebaseUser user) {
 
     }
 }

@@ -3,5 +3,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="ksa">#327052</color>
+    <color name="darKsa">#285F44</color>
     <color name="notBlack">#373737</color>
+    <color name="bigPage"> #F4E6D9</color>
+    <color name="lightGreen"> #759987</color>
+    <color name="whitgrawy"> #E7EEEB</color>
+
+    #759987
 </resources>

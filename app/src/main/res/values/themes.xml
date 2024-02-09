@@ -1,8 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.MealitJava" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/ksa</item>
+        <item name="colorPrimaryVariant">@color/lightGreen</item>
+        <item name="colorOnPrimary">@color/bigPage</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/darKsa</item>
+        <item name="colorSecondaryVariant">@color/whitgrawy</item>
+        <!-- Status bar color. -->
+
+        <item name="android:statusBarColor">@color/darKsa</item>
     </style>
 
     <style name="Theme.MealitJava" parent="Base.Theme.MealitJava" />
