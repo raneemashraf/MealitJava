@@ -46,4 +46,9 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
         Toast.makeText(this,"fail",Toast.LENGTH_LONG);
 
     }
+
+    @Override
+    public void onSuccessGoogle(FirebaseUser user) {
+
+    }
 }
