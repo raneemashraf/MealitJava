@@ -15,7 +15,7 @@ import java.util.List;
 
 @Dao
 public interface MealDao {
-       @Query("SELECT * FROM meal where dateModified = 'fav' ")
+       @Query("SELECT * FROM meal ")
         LiveData<List<MealsItem>> getAllFavoriteMeals();
        @Insert(onConflict = OnConflictStrategy.IGNORE)
         void insertMealToFavorite(MealsItem meal);
