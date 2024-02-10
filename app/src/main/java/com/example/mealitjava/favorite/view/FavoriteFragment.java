@@ -47,8 +47,6 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favorite, container, false);
 
-
-
     }
 
     @Override
@@ -118,5 +116,4 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
                 })
                 .setNegativeButton(android.R.string.cancel, null).show();
     }
-
 }

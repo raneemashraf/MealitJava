@@ -1,5 +1,7 @@
 package com.example.mealitjava.favorite.presenter;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 
 import com.example.mealitjava.favorite.view.FavoriteView;
@@ -31,7 +33,9 @@ public class FavMealPresenterImp implements FavMealPresenter {
 
     @Override
     public void getMeals() {
+        Log.i("TAG", "getMeals: ");
        LiveData<List<MealsItem>>result = mealsRepository.getFavMeals();
+        Log.i("TAG", "getMeals: "+result);
         favView.showFav(result);
     }
     @Override
