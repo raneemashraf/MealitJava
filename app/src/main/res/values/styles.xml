@@ -33,4 +33,12 @@
         <item name="cornerSizeBottomRight">15dp</item>
         <item name="cornerSizeBottomLeft">15dp</item>
     </style>
+
+    <style name="CustomToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@color/whitgrawy</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:gravity">center</item>
+        <item name="fontFamily">@font/lobster</item>
+    </style>
+
 </resources>

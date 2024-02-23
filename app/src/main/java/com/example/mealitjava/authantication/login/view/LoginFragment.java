@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment implements LogInViewInterface {
 //    }
     @Override
     public void onSuccess(FirebaseUser user) {
-        Toast.makeText(getContext(), "Login Success", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getContext(), "Login Success", Toast.LENGTH_LONG).show();
         Log.i(TAG, "onSuccess: ");
         goToHomeActivity();
     }

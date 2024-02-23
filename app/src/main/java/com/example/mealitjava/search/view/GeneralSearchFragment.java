@@ -57,6 +57,7 @@ public class GeneralSearchFragment extends Fragment implements GeneralSearchView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
+        
         generalSearchPresenter = new GeneralSearchPresenterImpl(this,
                 MealsRepositoryImpl.getInstance(MealsItemRemoteImpl.getInstance()));
 
