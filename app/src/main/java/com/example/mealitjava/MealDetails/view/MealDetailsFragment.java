@@ -1,7 +1,10 @@
 package com.example.mealitjava.MealDetails.view;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealitjava.InternetConnection;
+import com.example.mealitjava.MainActivity;
 import com.example.mealitjava.MealDetails.presenter.MealDetailsPresenter;
 import com.example.mealitjava.MealDetails.presenter.MealDetailsPresenterImpl;
 import com.example.mealitjava.R;
@@ -29,6 +33,7 @@ import com.example.mealitjava.model.GetIngredientsFromMeal;
 import com.example.mealitjava.model.MealPlannerAndMealConverter;
 import com.example.mealitjava.model.MealsItem;
 import com.example.mealitjava.model.PlannerModel;
+import com.example.mealitjava.model.repository.authRepo.AuthRepositoryImpl;
 import com.example.mealitjava.model.repository.mealsRepo.MealsRepositoryImpl;
 import com.example.mealitjava.remoteDataSource.api.MealsItemRemoteImpl;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +50,6 @@ public class MealDetailsFragment extends Fragment {
     FragmentMealDetailsBinding binding;
     MealsIngredientsAdapter ingredientsAdapter;
     MealDetailsPresenter mealDetailsPresenter;
-    MealsItemRemoteImpl mealsItemRemote;
     LinearLayoutManager linearLayoutManager;
     OnClickFavoriteMeal onClickFavoriteMeal;
     DatePickerDialog.OnDateSetListener onDateSetListener;
@@ -79,49 +83,6 @@ public class MealDetailsFragment extends Fragment {
 
         MealDetailsFragmentArgs args = MealDetailsFragmentArgs.fromBundle(getArguments());
         this.mealsItem = args.getMealitem();
-
-        firebaseDatabase = FirebaseDatabase.getInstance();
-
-        databaseReferenceFavorite = firebaseDatabase.getReference()
-                .child("user")
-                .child(FirebaseAuth.getInstance().getUid())
-                .child("favourite");
-
-        databaseReferencePlanner = firebaseDatabase.getReference()
-                .child("user")
-                .child(FirebaseAuth.getInstance().getUid())
-                .child("plan");
-
-        binding.imageViewAddToFavITemDetails.setOnClickListener(view1 -> {
-            mealsItem.dateModified = "fav";
-            mealDetailsPresenter.addMealToFavorite(mealsItem);
-            Toast.makeText(getContext(), "Added to Favorite (;", Toast.LENGTH_SHORT).show();
-            databaseReferenceFavorite.child(mealsItem.idMeal).setValue(mealsItem);
-
-            binding.imageViewAddToFavITemDetails
-                    .setImageResource(R.drawable.baseline_favorite_24);
-
-        });
-        binding.imageViewAddToFavITemDetails.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onClick(View v) {
-                        mealDetailsPresenter.addMealToFavorite(mealsItem);
-                        Toast.makeText(getContext(), "Added to Favorite (;", Toast.LENGTH_SHORT).show();
-                        databaseReferenceFavorite.child(mealsItem.idMeal).setValue(mealsItem);
-                        binding.imageViewAddToFavITemDetails
-                                .setImageResource(R.drawable.baseline_favorite_24);
-            }
-        });
-
-        binding.imageViewAddToCalendarItemDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDatePickerDialog();
-                //databaseReferencePlanner.child(mealsItem.idMeal).setValue(mealsItem);
-            }
-        });
-
         ingredientsAdapter = new MealsIngredientsAdapter(new ArrayList<>());
         linearLayoutManager = new LinearLayoutManager(requireContext());
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
@@ -129,6 +90,56 @@ public class MealDetailsFragment extends Fragment {
         binding.recyclerViewIngredientsItemDetails.setAdapter(ingredientsAdapter);
 
         showMealDetails(mealsItem);
+
+        if (!AuthRepositoryImpl.getInstance().isAuthenticated()) {
+            Toast.makeText(getContext(), "Please sign Up to access this feature", Toast.LENGTH_SHORT).show();
+        } else {
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReferenceFavorite = firebaseDatabase.getReference()
+                    .child("user")
+                    .child(FirebaseAuth.getInstance().getUid())
+                    .child("favourite");
+
+            databaseReferencePlanner = firebaseDatabase.getReference()
+                    .child("user")
+                    .child(FirebaseAuth.getInstance().getUid())
+                    .child("plan");
+
+            binding.imageViewAddToFavITemDetails.setOnClickListener(view1 -> {
+                if (!AuthRepositoryImpl.getInstance().isAuthenticated()) {
+                    openGotoSignUpDialogue();
+                }
+                mealsItem.dateModified = "fav";
+                mealDetailsPresenter.addMealToFavorite(mealsItem);
+                Toast.makeText(getContext(), "Added to Favorite (;", Toast.LENGTH_SHORT).show();
+                databaseReferenceFavorite.child(mealsItem.idMeal).setValue(mealsItem);
+
+                binding.imageViewAddToFavITemDetails
+                        .setImageResource(R.drawable.baseline_favorite_24);
+
+            });
+            binding.imageViewAddToFavITemDetails.setOnClickListener(new View.OnClickListener() {
+
+                @SuppressLint("ResourceAsColor")
+                @Override
+                public void onClick(View v) {
+                    mealDetailsPresenter.addMealToFavorite(mealsItem);
+                    Toast.makeText(getContext(), "Added to Favorite (;", Toast.LENGTH_SHORT).show();
+                    databaseReferenceFavorite.child(mealsItem.idMeal).setValue(mealsItem);
+                    binding.imageViewAddToFavITemDetails
+                            .setImageResource(R.drawable.baseline_favorite_24);
+                }
+            });
+
+            binding.imageViewAddToCalendarItemDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDatePickerDialog();
+                    //databaseReferencePlanner.child(mealsItem.idMeal).setValue(mealsItem);
+                }
+            });
+        }
+
 
     }
 
@@ -192,6 +203,16 @@ public class MealDetailsFragment extends Fragment {
 
     }
 
-
+    private void openGotoSignUpDialogue() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Sign Up Required")
+                .setMessage("Please sign Up to access this feature.")
+                .setPositiveButton(R.string.singup, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        startActivity(new Intent(requireActivity(), MainActivity.class));
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null).show();
+    }
 
 }

@@ -154,18 +154,18 @@
             app:constraint_referenced_ids="cardViewRandomMeal,textView"
             tools:layout_editor_absoluteY="341dp" />
 
-        <ImageView
-            android:id="@+id/logoutButton"
-            android:layout_width="46dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="360dp"
-            app:layout_constraintBottom_toTopOf="@+id/topGuideline"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/baseline_exit_to_app_24" />
+<!--        <ImageView-->
+<!--            android:id="@+id/logoutButton"-->
+<!--            android:layout_width="46dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginStart="360dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/topGuideline"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/guideline3"-->
+<!--            app:layout_constraintHorizontal_bias="1.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="1.0"-->
+<!--            app:srcCompat="@drawable/baseline_exit_to_app_24" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

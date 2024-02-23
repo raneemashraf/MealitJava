@@ -116,13 +116,12 @@ public class SignUpFragment extends Fragment implements SignUpViewInterface {
 //    }
     @Override
     public void onSuccess(FirebaseUser user) {
-        Toast.makeText(getContext(), "Login Success", Toast.LENGTH_LONG).show();
         goToHomeActivity();
     }
 
     @Override
     public void OnFailure(String message) {
-        Toast.makeText(getContext(),"fail",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),"Signup fail",Toast.LENGTH_LONG).show();
     }
 
     @Override

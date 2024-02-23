@@ -21,6 +21,12 @@ public class MealLocalSourceImpl implements MealLocalSource {
         favoriteMeals = mealDao.getAllFavoriteMeals();
         plannedMeals = mealDao.getAllPlannerMeals(d);
     }
+
+    public MealLocalSourceImpl(Context ctx) {
+        DataBase dataBase = DataBase.getInstance(ctx);
+        mealDao = dataBase.mealDao();
+    }
+
     public static MealLocalSourceImpl getInstance(Context context,String d){
         if(mealLocalSource == null){
             mealLocalSource = new MealLocalSourceImpl(context,d);
